@@ -8,13 +8,35 @@
 .mw-prefs {
 	&-tabs {
 		&-wrapper.oo-ui-panelLayout-framed,
-		> .oo-ui-menuLayout-content > .oo-ui-indexLayout-stackLayout > .oo-ui-tabPanelLayout {
-			border-color: var( --border-color-base );
+		>.oo-ui-menuLayout-content>.oo-ui-indexLayout-stackLayout>.oo-ui-tabPanelLayout {
+			border-color: var(--border-color-base);
 		}
 	}
+}
 
-	&-buttons {
-		background-color: var( --color-surface-0 );
-		border-color: var( --border-color-base );
+// Mediawiki 1.40 removed .mw-prefs-button div.
+// Make sure submit button above header in
+// tablet or smaller device.
+
+#preferences .mw-htmlform-submit-buttons {
+	--bottom: 0;
+	bottom: 0;
+	background-color: var(--color-surface-0);
+	border-color: var(--border-color-base);
+	transition: var(--transition-menu);
+	transition-property: bottom;
+}
+
+@media (max-width: @width-breakpoint-desktop ) {
+	#preferences .mw-htmlform-submit-buttons {
+		display: flex;
+		justify-content: end;
+		bottom: var( --bottom );
+	}
+}
+
+@media (max-width: @width-breakpoint-tablet ) {
+	.citizen-scroll--down #preferences .mw-htmlform-submit-buttons {
+		bottom: 0;
 	}
 }

@@ -93,6 +93,24 @@ function initBodyContent( bodyContent ) {
 }
 
 /**
+ * Avoid citizen header block prefrences submit button visibility.
+ */
+function initPrefsSubmitStickyPosition() {
+	const button = document.querySelector("#preferences .mw-htmlform-submit-buttons");
+	const header = document.querySelector('.citizen-header');
+
+	const direction = getComputedStyle(header).getPropertyValue("--header-direction")
+	let offset = 0;
+	if (direction == "row") {
+		offset = header.clientHeight
+	}
+	if (direction == "column") {
+		offset = header.clientWidth
+	}
+	button.style.setProperty('--bottom', offset + 'px');
+}
+
+/**
  * @param {Window} window
  * @return {void}
  */
@@ -101,6 +119,7 @@ function main( window ) {
 		config = require( './config.json' ),
 		search = require( './search.js' ),
 		checkbox = require( './checkbox.js' );
+		prefsForm = document.getElementById('mw-prefs-form');
 
 	// Sometimes the loading indicator isn't removed
 	document.documentElement.classList.remove( 'citizen-loading' );
@@ -108,6 +127,10 @@ function main( window ) {
 	enableCssAnimations( window.document );
 	search.init( window );
 	initStickyHeader( window.document );
+
+	if (prefsForm) {
+		initPrefsSubmitStickyPosition();
+	}
 
 	// Set up checkbox hacks
 	checkbox.bind();
